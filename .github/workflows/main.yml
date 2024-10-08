@@ -42,7 +42,10 @@ jobs:
         run: |
           echo $DBT_SNOWFLAKE_KEY | base64 -d > snowflake_rsa_key.p8
           cat snowflake_rsa_key.p8
-          pwd
+          DBT_SNOWFLAKE_KEY_PATH=$(pwd)
+          echo "Current Directory: DBT_SNOWFLAKE_KEY_PATH"
+          echo "DBT_SNOWFLAKE_KEY_PATH=DBT_SNOWFLAKE_KEY_PATH" >> $GITHUB_ENV
+          echo $DBT_SNOWFLAKE_KEY_PATH
           dbt debug
 
       - name: Build DBT project
