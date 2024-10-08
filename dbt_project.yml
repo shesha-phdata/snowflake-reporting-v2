@@ -12,7 +12,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-name: "phdata_snowflake_reporting"
+name: "snowflake_reporting" #"phdata_snowflake_reporting"
 version: "1.0.0"
 config-version: 2
 
