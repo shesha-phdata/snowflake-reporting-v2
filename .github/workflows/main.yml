@@ -30,6 +30,7 @@ jobs:
 
       - name: Build DBT project
         env:
+          DBT_ENV_SECRET_SF_REPORTING_REPO_KEY: ${{ secrets.DBT_ENV_SECRET_SF_REPORTING_REPO_KEY }}
           DBT_SNOWFLAKE_ACCOUNT: ${{ vars.DBT_SNOWFLAKE_ACCOUNT }}
           DBT_SNOWFLAKE_DB: ${{ vars.DBT_SNOWFLAKE_DB }}
           DBT_SNOWFLAKE_KEY: ${{ secrets.DBT_SNOWFLAKE_ACCOUNT }}
