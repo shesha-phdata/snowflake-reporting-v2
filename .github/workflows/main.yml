@@ -29,4 +29,8 @@ jobs:
           dbt deps
 
       - name: Build DBT project
-        run: dbt build
+        env:
+          DBT_SNOWFLAKE_ACCOUNT: ${{ vars.DBT_SNOWFLAKE_ACCOUNT }}
+        run: |
+          echo $DBT_SNOWFLAKE_ACCOUNT
+          dbt build
