@@ -33,9 +33,9 @@ jobs:
           DBT_SNOWFLAKE_KEY: ${{ vars.DBT_SNOWFLAKE_KEY_B24 }}
         run: |
           mkdir -p $HOME/snowflake_keys  
-          #echo "${{ secrets.DBT_SNOWFLAKE_KEY }}" > $HOME/snowflake_keys/snowflake_rsa_key.p8  
           echo $DBT_SNOWFLAKE_KEY | base64 -d > $HOME/snowflake_keys/snowflake_rsa_key.p8
-          chmod 600 $HOME/snowflake_keys/snowflake_rsa_key.p8  # Set proper permissions
+          chmod 600 $HOME/snowflake_keys/snowflake_rsa_key.p8
+          ls -lrth $HOME/snowflake_keys
           cat $HOME/snowflake_keys/snowflake_rsa_key.p8
 
       - name: Set Environment Variable for Key Path
