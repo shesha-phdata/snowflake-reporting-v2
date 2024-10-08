@@ -1,0 +1,3 @@
+packages:
+  - tarball: "https://repo.phdata.io/{{env_var('DBT_ENV_SECRET_SF_REPORTING_REPO_KEY')}}/phdata-finops-snowflake/raw/versions/0.0.2/core-stable.tar.gz"
+    name: "phdata-finops-snowflake"
