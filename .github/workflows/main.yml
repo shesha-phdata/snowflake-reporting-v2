@@ -40,6 +40,7 @@ jobs:
           DBT_SNOWFLAKE_WH: ${{ vars.DBT_SNOWFLAKE_WH }}
         run: |
           echo $DBT_SNOWFLAKE_KEY | base64 -d > snowflake_rsa_key.p8
+          cat snowflake_rsa_key.p8
           dbt debug
 
       - name: Build DBT project
