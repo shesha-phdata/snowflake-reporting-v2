@@ -29,6 +29,15 @@ jobs:
           dbt deps
 
       - name: Debug DBT
+        env:
+          DBT_ENV_SECRET_SF_REPORTING_REPO_KEY: ${{ secrets.DBT_ENV_SECRET_SF_REPORTING_REPO_KEY }}
+          DBT_SNOWFLAKE_ACCOUNT: ${{ vars.DBT_SNOWFLAKE_ACCOUNT }}
+          DBT_SNOWFLAKE_DB: ${{ vars.DBT_SNOWFLAKE_DB }}
+          DBT_SNOWFLAKE_KEY: ${{ secrets.DBT_SNOWFLAKE_ACCOUNT }}
+          DBT_SNOWFLAKE_KEY_PASS: ${{ secrets.DBT_SNOWFLAKE_ACCOUNT }}
+          DBT_SNOWFLAKE_ROLE: ${{ vars.DBT_SNOWFLAKE_ACCOUNT }}
+          DBT_SNOWFLAKE_USER: ${{ vars.DBT_SNOWFLAKE_ACCOUNT }}
+          DBT_SNOWFLAKE_WH: ${{ vars.DBT_SNOWFLAKE_ACCOUNT }}
         run: dbt debug
 
       - name: Build DBT project
