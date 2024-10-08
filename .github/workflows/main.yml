@@ -33,12 +33,14 @@ jobs:
           DBT_ENV_SECRET_SF_REPORTING_REPO_KEY: ${{ secrets.DBT_ENV_SECRET_SF_REPORTING_REPO_KEY }}
           DBT_SNOWFLAKE_ACCOUNT: ${{ vars.DBT_SNOWFLAKE_ACCOUNT }}
           DBT_SNOWFLAKE_DB: ${{ vars.DBT_SNOWFLAKE_DB }}
-          DBT_SNOWFLAKE_KEY: ${{ secrets.DBT_SNOWFLAKE_ACCOUNT }}
-          DBT_SNOWFLAKE_KEY_PASS: ${{ secrets.DBT_SNOWFLAKE_ACCOUNT }}
-          DBT_SNOWFLAKE_ROLE: ${{ vars.DBT_SNOWFLAKE_ACCOUNT }}
-          DBT_SNOWFLAKE_USER: ${{ vars.DBT_SNOWFLAKE_ACCOUNT }}
-          DBT_SNOWFLAKE_WH: ${{ vars.DBT_SNOWFLAKE_ACCOUNT }}
-        run: dbt debug
+          DBT_SNOWFLAKE_KEY: ${{ secrets.DBT_SNOWFLAKE_KEY }}
+          DBT_SNOWFLAKE_KEY_PASS: ${{ secrets.DBT_SNOWFLAKE_KEY_PASS }}
+          DBT_SNOWFLAKE_ROLE: ${{ vars.DBT_SNOWFLAKE_ROLE }}
+          DBT_SNOWFLAKE_USER: ${{ vars.DBT_SNOWFLAKE_USER }}
+          DBT_SNOWFLAKE_WH: ${{ vars.DBT_SNOWFLAKE_WH }}
+        run: |
+          echo $DBT_SNOWFLAKE_KEY | base64 -d > snowflake_rsa_key.p8
+          dbt debug
 
       - name: Build DBT project
         env:
