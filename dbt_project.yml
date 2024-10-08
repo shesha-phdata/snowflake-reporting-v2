@@ -13,7 +13,7 @@
 #   limitations under the License.
 
 name: "phdata_snowflake_reporting"
-version: "0.0.2"
+version: "1.0.0"
 config-version: 2
 
 vars:
