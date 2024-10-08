@@ -1,9 +1,46 @@
-name: "snowflake_reporting"
-version: "1.0.0"
+#name: "snowflake_reporting"
+#version: "1.0.0"
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+name: "phdata_snowflake_reporting"
+version: "0.0.2"
 config-version: 2
 
+vars:
+  source_database_name: snowflake # ms_snowflake_reporting_example_data (db with example showflake db data and cdops-reporting data for comparison)
+  persist_data: true # whether to persist raw layer as tables (incremental where appropriate) rather than views
+  retention_months: 36
+
 profile: "snowflake"
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
 
 clean-targets:
   - "target"
   - "dbt_packages"
+
+models:
+  phdata_snowflake_reporting:
+    +materialized: view
+    raw:
+      +schema: raw
+    reporting:
+      +schema: reporting
+    reporting_ext:
+      +schema: reporting_ext
+
