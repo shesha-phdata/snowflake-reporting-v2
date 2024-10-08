@@ -28,6 +28,18 @@ jobs:
         run: |
           dbt deps
 
+      - name: Set up Snowflake Private Key
+        env:
+          DBT_SNOWFLAKE_KEY: ${{ vars.DBT_SNOWFLAKE_KEY_B24 }}
+        run: |
+          mkdir -p $HOME/snowflake_keys  # Create a directory for the key
+          #echo "${{ secrets.DBT_SNOWFLAKE_KEY }}" > $HOME/snowflake_keys/snowflake_rsa_key.p8  # Save the key from GitHub Secrets
+          echo $DBT_SNOWFLAKE_KEY | base64 -d > $HOME/snowflake_keys/snowflake_rsa_key.p8
+          chmod 600 $HOME/snowflake_keys/snowflake_rsa_key.p8  # Set proper permissions
+
+      - name: Set Environment Variable for Key Path
+        run: echo "DBT_SNOWFLAKE_KEY_PATH=$HOME/snowflake_keys/snowflake_rsa_key.p8" >> $GITHUB_ENV
+
       - name: Debug DBT
         env:
           DBT_ENV_SECRET_SF_REPORTING_REPO_KEY: ${{ secrets.DBT_ENV_SECRET_SF_REPORTING_REPO_KEY }}
@@ -39,13 +51,10 @@ jobs:
           DBT_SNOWFLAKE_ROLE: ${{ vars.DBT_SNOWFLAKE_ROLE }}
           DBT_SNOWFLAKE_USER: ${{ vars.DBT_SNOWFLAKE_USER }}
           DBT_SNOWFLAKE_WH: ${{ vars.DBT_SNOWFLAKE_WH }}
+          DBT_SNOWFLAKE_KEY_PATH: ${{ env.DBT_SNOWFLAKE_KEY_PATH }}
         run: |
-          echo $DBT_SNOWFLAKE_KEY | base64 -d > snowflake_rsa_key.p8
-          cat snowflake_rsa_key.p8
-          DBT_SNOWFLAKE_KEY_PATH=$(pwd)
-          echo "Current Directory: DBT_SNOWFLAKE_KEY_PATH"
-          echo "DBT_SNOWFLAKE_KEY_PATH=DBT_SNOWFLAKE_KEY_PATH" >> $GITHUB_ENV
           echo $DBT_SNOWFLAKE_KEY_PATH
+          cat $HOME/snowflake_keys/snowflake_rsa_key.p8
           dbt debug
 
       - name: Build DBT project
